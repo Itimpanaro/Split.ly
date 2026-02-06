@@ -17,7 +17,9 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Habilitar mod_rewrite y forzar un único MPM
 RUN a2enmod rewrite && \
     a2dismod mpm_event mpm_worker mpm_prefork && \
-    a2enmod mpm_prefork
+    a2enmod mpm_prefork && \
+    echo "LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so" \
+    > /etc/apache2/mods-enabled/mpm_prefork.load
 
 # Configuración de Apache para Laravel
 RUN echo "<VirtualHost *:80>\n\
